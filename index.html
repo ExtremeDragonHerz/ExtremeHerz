@@ -1,106 +1,217 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meu Site Hub</title>
-<style>
-  body { font-family: Arial, sans-serif; background: #111; color: #eee; margin: 0; padding: 0; }
-  header { background: #222; padding: 20px; text-align: center; }
-  h1 { margin: 0; font-size: 2em; }
-  nav { background: #333; overflow: hidden; }
-  nav a { float: left; display: block; color: #fff; padding: 14px 20px; text-decoration: none; text-align: center; }
-  nav a:hover { background: #ddd; color: black; }
-  .tab { display: none; padding: 20px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 15px; }
-  .item { background: #222; border-radius: 5px; overflow: hidden; text-align: center; cursor: pointer; transition: transform 0.2s; }
-  .item:hover { transform: scale(1.05); }
-  .item img { width: 100%; height: auto; display: block; border-bottom: 1px solid #444; }
-  .item p { margin: 10px 0; font-weight: bold; font-size: 0.95em; }
-  #modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
-  #modal img { max-width: 90%; max-height: 90%; border: 5px solid #fff; border-radius: 10px; }
-  #modal span { position: absolute; top: 20px; right: 40px; color: #fff; font-size: 3em; cursor: pointer; }
-  #watermark { position: fixed; bottom: 10px; right: 10px; font-size: 1em; color: rgba(255,255,255,0.2); pointer-events: none; }
-  footer { text-align: center; padding: 20px; background: #222; color: #aaa; font-size: 0.9em; }
-  input#search { margin: 20px auto; display: block; padding: 10px; width: 90%; max-width: 400px; border-radius: 5px; border: none; font-size: 1em; }
-  .social-links { text-align: center; margin-top: 20px; }
-  .social-links a { margin: 0 10px; color: #fff; text-decoration: none; }
-  .social-links a:hover { text-decoration: underline; }
-  .rammstein-info { grid-column: 1 / -1; text-align: center; margin-top: 20px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rammstein - Equipamento dos Membros</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/5/55/Rammstein_Logo.svg') no-repeat center center fixed;
+            background-size: 20%;
+            color: #f0f0f0;
+            background-color: #000;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: rgba(0,0,0,0.8);
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            color: #ff0000;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        nav {
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: #f0f0f0;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ff0000;
+        }
+
+        section {
+            background-color: rgba(0,0,0,0.7);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 1000px;
+            border-radius: 10px;
+        }
+
+        section h2 {
+            text-align: center;
+            color: #ff0000;
+            margin-bottom: 15px;
+        }
+
+        .equipamento {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .equipamento-item {
+            background-color: #222;
+            margin: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 250px;
+            transition: transform 0.3s;
+        }
+
+        .equipamento-item:hover {
+            transform: scale(1.05);
+        }
+
+        .equipamento-item img {
+            width: 100%;
+        }
+
+        .equipamento-item h3 {
+            text-align: center;
+            padding: 10px;
+        }
+
+        footer {
+            background-color: #111;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #ff0000;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Equipamento dos Membros do Rammstein</h1>
+    </header>
 
-<header>
-  <h1>Meu Site Hub</h1>
-</header>
+    <nav>
+        <a href="#richard">Richard Z. Kruspe</a>
+        <a href="#paul">Paul Landers</a>
+        <a href="#oliver">Oliver Riedel</a>
+        <a href="#christoph">Christoph Schneider</a>
+    </nav>
 
-<nav>
-  <a href="#" onclick="openTab('gallery')">Galeria Geral</a>
-  <a href="#" onclick="openTab('rammstein')">Rammstein</a>
-  <a href="#" onclick="openTab('about')">Sobre Mim</a>
-</nav>
+    <!-- Richard Z. Kruspe -->
+    <section id="richard">
+        <h2>Richard Z. Kruspe</h2>
+        <div class="equipamento">
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/ESP_RZK-I_Titanium.jpg" alt="ESP RZK-I">
+                <h3>Guitarra: ESP RZK-I</h3>
+                <p>Guitarra signature com captadores EMG 81 e Floyd Rose.</p>
+            </div>
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Mesa_Boogie_Dual_Rectifier.jpg" alt="Mesa Boogie Dual Rectifier">
+                <h3>Amplificador: Mesa Boogie Dual Rectifier</h3>
+                <p>Amplificador valvulado utilizado em estúdio e ao vivo.</p>
+            </div>
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Neumann_M149.jpg" alt="Microfone Neumann M149">
+                <h3>Microfone: Neumann M149</h3>
+                <p>Microfone de estúdio de alta qualidade.</p>
+            </div>
+        </div>
+    </section>
 
-<input type="text" id="search" placeholder="🔍 Buscar..." onkeyup="filterItems()">
+    <!-- Paul Landers -->
+    <section id="paul">
+        <h2>Paul Landers</h2>
+        <div class="equipamento">
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Paul_Landers_Guitar.jpg" alt="Guitarra Paul Landers">
+                <h3>Guitarra: Gibson Les Paul Custom</h3>
+                <p>Guitarra elétrica utilizada por Paul Landers.</p>
+            </div>
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Paul_Landers_Amp.jpg" alt="Amplificador Paul Landers">
+                <h3>Amplificador: Engl Powerball 645 MK1</h3>
+                <p>Amplificador de 100W utilizado em estúdio e ao vivo.</p>
+            </div>
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Paul_Landers_Pedal.jpg" alt="Pedal Paul Landers">
+                <h3>Pedal: Tech 21 PL1 Fly Rig</h3>
+                <p>Pedalboard compacto com efeitos e amplificador integrado.</p>
+            </div>
+        </div>
+    </section>
 
-<!-- Abas -->
-<div id="gallery" class="tab grid"></div>
-<div id="rammstein" class="tab grid"></div>
-<div id="about" class="tab">
-  <h2>Sobre Mim</h2>
-  <p>Olá! Meu nome é <strong>César Trivelato</strong>. Conheci Rammstein em 2021 e, desde então, eles fazem parte da minha vida. Tenho depressão, e a música da banda me ajudou muito em momentos difíceis. Espero um dia poder vê-los ao vivo. Tenho 17 anos e adoro compartilhar minha paixão por música e cultura através deste site.</p>
-  <p>Siga-me no Instagram: <a href="https://www.instagram.com/dunkelhei7/" target="_blank">@dunkelhei7</a></p>
-</div>
+    <!-- Oliver Riedel -->
+    <section id="oliver">
+        <h2>Oliver Riedel</h2>
+        <div class="equipamento">
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Sandberg_Bass.jpg" alt="Baixo Sandberg">
+                <h3>Baixo: Sandberg California PM</h3>
+                <p>Baixo elétrico utilizado por Oliver Riedel.</p>
+            </div>
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Ampeg_SVT-II.jpg" alt="Amplificador Ampeg SVT-II">
+                <h3>Amplificador: Ampeg SVT-II</h3>
+                <p>Amplificador de 300W utilizado nos primeiros anos da banda.</p>
+            </div>
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Tech_21_SansAmp_Bass.jpg" alt="Pedal Tech 21 SansAmp">
+                <h3>Pedal: Tech 21 SansAmp Bass Driver DI</h3>
+                <p>Pedal de pré-amplificador e DI para baixo.</p>
+            </div>
+        </div>
+    </section>
 
-<!-- Modal -->
-<div id="modal" onclick="closeModal()">
-  <span>&times;</span>
-  <img id="modal-img" src="" alt="">
-</div>
+    <!-- Christoph Schneider -->
+    <section id="christoph">
+        <h2>Christoph Schneider</h2>
+        <div class="equipamento">
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/DW_Drum_Kit.jpg" alt="Kit de Bateria DW">
+                <h3>Bateria: DW Collector's Series</h3>
+                <p>Kit de bateria utilizado por Christoph Schneider.</p>
+            </div>
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Sabian_Cymbals.jpg" alt="Pratos Sabian">
+                <h3>Pratos: Sabian</h3>
+                <p>Pratos de bateria utilizados por Christoph Schneider.</p>
+            </div>
+            <div class="equipamento-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Vic_Firth_Sticks.jpg" alt="Baquetas Vic Firth">
+                <h3>Baquetas: Vic Firth</h3>
+                <p>Baquetas de bateria utilizadas por Christoph Schneider.</p>
+            </div>
+        </div>
+    </section>
 
-<div id="watermark">César Trivelato</div>
-
-<footer>Todos os direitos reservados a Rammstein</footer>
-
-<script>
-// Itens Galeria Geral
-const galleryItems = [
-  { name: "Foto Exemplo 1", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Example.jpg/240px-Example.jpg" },
-  { name: "Foto Exemplo 2", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Example.jpg/240px-Example.jpg" }
-];
-
-// Itens Rammstein
-const rammsteinItems = [
-  { name: "Herzeleid (1995)", img: "https://upload.wikimedia.org/wikipedia/en/5/5d/Rammstein_-_Herzeleid.png" },
-  { name: "Sehnsucht (1997)", img: "https://upload.wikimedia.org/wikipedia/en/f/f7/Rammstein_-_Sehnsucht.png" },
-  { name: "Mutter (2001)", img: "https://upload.wikimedia.org/wikipedia/en/5/5b/Rammstein_-_Mutter.png" },
-  { name: "Reise, Reise (2004)", img: "https://upload.wikimedia.org/wikipedia/en/2/2b/Rammstein_-_Reise_Reise.png" },
-  { name: "Rosenrot (2005)", img: "https://upload.wikimedia.org/wikipedia/en/c/c9/Rammstein_Rosenrot.png" },
-  { name: "Liebe ist für alle da (2009)", img: "https://upload.wikimedia.org/wikipedia/en/0/0e/Rammstein_Liebe_ist_f%C3%BCr_alle_da.png" },
-  { name: "Rammstein (2019)", img: "https://upload.wikimedia.org/wikipedia/en/6/61/Rammstein_-_Rammstein_%28album%29.png" },
-  { name: "Zeit (2022)", img: "https://upload.wikimedia.org/wikipedia/en/d/dc/Rammstein_-_Zeit.png" },
-  { name: "Pedal Distortion Marshall", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Guitar_effects_icon.svg/240px-Guitar_effects_icon.svg.png" },
-  { name: "Pedal Delay Boss", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Guitar_effects_icon.svg/240px-Guitar_effects_icon.svg.png" },
-  { name: "Foto Show 1", img: "https://upload.wikimedia.org/wikipedia/commons/8/85/Rammstein_live_2016.jpg" },
-  { name: "Foto Show 2", img: "https://upload.wikimedia.org/wikipedia/commons/0/0a/Rammstein_Wacken_2013.jpg" }
-];
-
-// Links Instagram e Loja
-const rammsteinLinks = `
-<div class="rammstein-info">
-<h3>Redes Sociais e Loja Oficial</h3>
-<div class="social-links">
-<p><a href="https://www.instagram.com/rammsteinofficial/" target="_blank">Instagram Oficial da Banda</a></p>
-<p><a href="https://www.instagram.com/till_lindemann_official/" target="_blank">Till Lindemann</a></p>
-<p><a href="https://www.instagram.com/richard.kruspe/" target="_blank">Richard Z. Kruspe</a></p>
-<p><a href="https://www.instagram.com/paullanders_official/" target="_blank">Paul Landers</a></p>
-<p><a href="https://www.instagram.com/oliver_riedel_official/" target="_blank">Oliver Riedel</a></p>
-<p><a href="https://www.instagram.com/christophschneider_official/" target="_blank">Christoph Schneider</a></p>
-<p><a href="https://www.instagram.com/christianlorenz_official/" target="_blank">Christian "Flake" Lorenz</a></p>
-<p><a href="https://www.rammsteinshop.us/en" target="_blank">Loja Oficial Rammstein</a></p>
-</div>
-</div>
-`;
-
-// Modal
-function openModal(src, alt){
+    <footer>
+        &copy; Todos os direitos reservados à Rammstein
+    </footer>
+</body>
+</html>
