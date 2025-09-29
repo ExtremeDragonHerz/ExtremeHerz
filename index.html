@@ -266,3 +266,87 @@
 </body>
 </html>
 </index.html> 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rammstein Amp Presets</title>
+<style>
+    body {
+        margin: 0;
+        background-color: #000;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Rammstein_Logo.svg/1200px-Rammstein_Logo.svg.png');
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: 150px auto;
+    }
+    h1 {
+        margin-top: 180px;
+        text-align: center;
+    }
+    .preset {
+        margin: 20px;
+        padding: 15px;
+        border: 1px solid #fff;
+        border-radius: 10px;
+        width: 300px;
+        text-align: left;
+    }
+    label {
+        display: block;
+        margin-top: 10px;
+    }
+    input[type=range] {
+        width: 100%;
+    }
+    .watermark {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        opacity: 0.2;
+        font-size: 24px;
+        pointer-events: none;
+    }
+</style>
+</head>
+<body>
+<h1>Rammstein Amp Preset - Herzeleid</h1>
+
+<div class="preset">
+    <label>Gain: <span id="gainVal">5</span></label>
+    <input type="range" id="gain" min="0" max="10" value="5" oninput="gainVal.innerText=this.value">
+    
+    <label>Bass: <span id="bassVal">4</span></label>
+    <input type="range" id="bass" min="0" max="10" value="4" oninput="bassVal.innerText=this.value">
+    
+    <label>Middle: <span id="midVal">4</span></label>
+    <input type="range" id="middle" min="0" max="10" value="4" oninput="midVal.innerText=this.value">
+    
+    <label>Treble: <span id="trebleVal">7</span></label>
+    <input type="range" id="treble" min="0" max="10" value="7" oninput="trebleVal.innerText=this.value">
+    
+    <label>Reverb: <span id="reverbVal">5</span></label>
+    <input type="range" id="reverb" min="0" max="10" value="5" oninput="reverbVal.innerText=this.value">
+    
+    <label>Volume: <span id="volumeVal">5</span></label>
+    <input type="range" id="volume" min="0" max="10" value="5" oninput="volumeVal.innerText=this.value">
+    
+    <label>FX: <span id="fxVal">0</span></label>
+    <input type="range" id="fx" min="0" max="10" value="0" oninput="fxVal.innerText=this.value">
+    
+    <label>Master: <span id="masterVal">5</span></label>
+    <input type="range" id="master" min="0" max="10" value="5" oninput="masterVal.innerText=this.value">
+</div>
+
+<div class="watermark">César Trivelato</div>
+
+</body>
+</html>
