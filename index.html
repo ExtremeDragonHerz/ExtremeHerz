@@ -215,3 +215,186 @@
     </footer>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Site Seguro - Exemplo</title>
+
+  <!-- Minimal external stylesheet (avoid inline styles to be CSP-compliant) -->
+  <link rel="stylesheet" href="/static/styles.css" integrity="sha256-REPLACE_WITH_SRI_HASH" crossorigin="anonymous">
+
+  <!-- No inline scripts: all scripts are loaded from allowed origins with SRI -->
+</head>
+<body>
+  <header>
+    <h1>Site Seguro — Exemplo</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>Formulário seguro (CSRF protegido)</h2>
+      <!-- O campo csrfToken deve ser gerado pelo servidor e injetado no template com uma variável segura -->
+      <form id="contactForm" method="POST" action="/submit">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <label>
+          Nome
+          <input name="name" type="text" required maxlength="100" />
+        </label>
+        <label>
+          Email
+          <input name="email" type="email" required maxlength="254" />
+        </label>
+        <label>
+          Mensagem
+          <textarea name="message" rows="6" maxlength="2000" required></textarea>
+        </label>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <small>&copy; Todos os direitos reservados</small>
+  </footer>
+
+  <!-- External JS (no inline). Use SRI and crossorigin -->
+  <script src="/static/main.js" integrity="sha256-REPLACE_WITH_SRI_HASH" crossorigin="anonymous"></script>
+</body>
+</html>
+// app.js
+const express = require('express');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const csurf = require('csurf');
+const cookieParser = require('cookie-parser');
+const path = require('path');
+const xss = require('xss'); // opcional: sanitização adicional
+
+const app = express();
+
+// Body parsing
+app.use(express.urlencoded({ extended: false, limit: '10kb' }));
+app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
+
+// Helmet: configura múltiplos headers de segurança
+app.use(helmet({
+  contentSecurityPolicy: false // vamos aplicar CSP via Nginx (ou configure aqui cuidadosamente)
+}));
+
+// Rate limiting (evita brute force)
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 100, // max 100 requests por IP no window
+  standardHeaders: true,
+  legacyHeaders: false
+});
+app.use(limiter);
+
+// Serve arquivos estáticos de /static (use um CDN quando possível)
+app.use('/static', express.static(path.join(__dirname, 'static'), {
+  // cache long-term; garanta versionamento dos arquivos
+  maxAge: '30d',
+  setHeaders: (res, path) => {
+    // evita o sniffing
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+  }
+}));
+
+// CSRF protection using cookies
+const csrfProtection = csurf({
+  cookie: {
+    httpOnly: true,
+    sameSite: 'lax', // ou 'strict' se for adequado
+    secure: true // requer HTTPS
+  }
+});
+app.use(csrfProtection);
+
+// Template route example (EJS/Pug/etc.) - here we send simple HTML with token placeholder
+app.get('/', (req, res) => {
+  const token = req.csrfToken();
+  // Render your template engine and inject token; for demo we do simple replace:
+  const html = require('fs').readFileSync(path.join(__dirname, 'views', 'index.html'), 'utf8')
+    .replace('{{csrfToken}}', token);
+  res.send(html);
+});
+
+// Handle form submit with basic server-side validation & sanitization
+app.post('/submit', (req, res) => {
+  // Validate lengths and types
+  const name = String(req.body.name || '').trim().slice(0, 100);
+  const email = String(req.body.email || '').trim().slice(0, 254);
+  const message = String(req.body.message || '').slice(0, 2000);
+
+  // Sanitização simples (opcional): remove tags XSS
+  const cleanName = xss(name);
+  const cleanMessage = xss(message);
+
+  // TODO: armazenar/usar com prepared statements / ORM para prevenir SQLi
+  // Exemplificação: apenas retorna OK
+  res.json({ status: 'ok', name: cleanName });
+});
+
+// Error handler minimal
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Erro interno');
+});
+
+// Start server (em produção use process manager e reverse proxy)
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+server {
+    listen 80;
+    server_name exemplo.com www.exemplo.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name exemplo.com www.exemplo.com;
+
+    ssl_certificate /etc/ssl/certs/seu_cert.pem;
+    ssl_certificate_key /etc/ssl/private/seu_key.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers "ECDHE-ECDSA-AES256-GCM-SHA384:..."; # use lista atualizada
+
+    root /var/www/rammstein-site;
+    index index.html;
+
+    # Security headers
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "geolocation=(),microphone=()" always;
+    add_header X-XSS-Protection "0" always;
+
+    # Content-Security-Policy: ajuste aos seus recursos. Exemplo restrito:
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.externo.com; connect-src 'self'; img-src 'self' data: https:; style-src 'self' 'nonce-REPLACE' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; object-src 'none'; frame-ancestors 'none'; base-uri 'self';" always;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # bloqueio de acesso a arquivos sensíveis
+    location ~ /\.(git|env|ht) {
+        deny all;
+    }
+}
+// main.js - exemplo simples
+document.getElementById('contactForm').addEventListener('submit', function (e) {
+  // Client-side validation adicional (sempre validar no servidor também)
+  const name = this.name.value.trim();
+  if (!name || name.length < 2) {
+    e.preventDefault();
+    alert('Digite um nome válido');
+    return false;
+  }
+  // opcional: reduzir taxa de envio com debounce/disable button
+  this.querySelector('button[type="submit"]').disabled = true;
+});
