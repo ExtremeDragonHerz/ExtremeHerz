@@ -3,54 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meu Site Hub</title>
+<title>Rammstein Hub Completo</title>
 <style>
   body { font-family: Arial, sans-serif; background: #111; color: #eee; margin: 0; padding: 0; }
   header { background: #222; padding: 20px; text-align: center; }
   h1 { margin: 0; font-size: 2em; }
-  nav { background: #333; overflow: hidden; }
-  nav a { float: left; display: block; color: #fff; padding: 14px 20px; text-decoration: none; text-align: center; }
-  nav a:hover { background: #ddd; color: black; }
-  .tab { display: none; padding: 20px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 15px; }
-  .item { background: #222; border-radius: 5px; overflow: hidden; text-align: center; cursor: pointer; transition: transform 0.2s; }
+  #search { margin: 20px auto; display: block; padding: 10px; width: 90%; max-width: 400px; border-radius: 5px; border: none; font-size: 1em; }
+  #gallery { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 15px; padding: 20px; }
+  .item { background: #222; border-radius: 5px; overflow: hidden; text-align: center; padding-bottom: 10px; cursor: pointer; transition: transform 0.2s; }
   .item:hover { transform: scale(1.05); }
   .item img { width: 100%; height: auto; display: block; border-bottom: 1px solid #444; }
-  .item p { margin: 10px 0; font-weight: bold; font-size: 0.95em; }
+  .item p { margin: 10px 0 0 0; font-weight: bold; font-size: 0.95em; }
+  /* Modal de visualização */
   #modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
   #modal img { max-width: 90%; max-height: 90%; border: 5px solid #fff; border-radius: 10px; }
   #modal span { position: absolute; top: 20px; right: 40px; color: #fff; font-size: 3em; cursor: pointer; }
-  #watermark { position: fixed; bottom: 10px; right: 10px; font-size: 1em; color: rgba(255,255,255,0.2); pointer-events: none; }
-  footer { text-align: center; padding: 20px; background: #222; color: #aaa; font-size: 0.9em; }
-  input#search { margin: 20px auto; display: block; padding: 10px; width: 90%; max-width: 400px; border-radius: 5px; border: none; font-size: 1em; }
-  .social-links { text-align: center; margin-top: 20px; }
-  .social-links a { margin: 0 10px; color: #fff; text-decoration: none; }
-  .social-links a:hover { text-decoration: underline; }
-  .rammstein-info { grid-column: 1 / -1; text-align: center; margin-top: 20px; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Meu Site Hub</h1>
+  <h1>Rammstein Hub Completo</h1>
+  <input type="text" id="search" placeholder="🔍 Buscar álbuns, timbres, pedais ou fotos..." onkeyup="filterItems()">
 </header>
 
-<nav>
-  <a href="#" onclick="openTab('gallery')">Galeria Geral</a>
-  <a href="#" onclick="openTab('rammstein')">Rammstein</a>
-  <a href="#" onclick="openTab('about')">Sobre Mim</a>
-</nav>
-
-<input type="text" id="search" placeholder="🔍 Buscar..." onkeyup="filterItems()">
-
-<!-- Abas -->
-<div id="gallery" class="tab grid"></div>
-<div id="rammstein" class="tab grid"></div>
-<div id="about" class="tab">
-  <h2>Sobre Mim</h2>
-  <p>Olá! Meu nome é <strong>César Trivelato</strong>. Conheci Rammstein em 2021 e, desde então, eles fazem parte da minha vida. Tenho depressão, e a música da banda me ajudou muito em momentos difíceis. Espero um dia poder vê-los ao vivo. Tenho 17 anos e adoro compartilhar minha paixão por música e cultura através deste site.</p>
-  <p>Siga-me no Instagram: <a href="https://www.instagram.com/dunkelhei7/" target="_blank">@dunkelhei7</a></p>
-</div>
+<div id="gallery"></div>
 
 <!-- Modal -->
 <div id="modal" onclick="closeModal()">
@@ -58,49 +35,61 @@
   <img id="modal-img" src="" alt="">
 </div>
 
-<div id="watermark">César Trivelato</div>
-
-<footer>Todos os direitos reservados a Rammstein</footer>
-
 <script>
-// Itens Galeria Geral
-const galleryItems = [
-  { name: "Foto Exemplo 1", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Example.jpg/240px-Example.jpg" },
-  { name: "Foto Exemplo 2", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Example.jpg/240px-Example.jpg" }
-];
-
-// Itens Rammstein
-const rammsteinItems = [
+// Lista completa de álbuns, fotos e timbres/pedais
+const items = [
+  // Álbuns
   { name: "Herzeleid (1995)", img: "https://upload.wikimedia.org/wikipedia/en/5/5d/Rammstein_-_Herzeleid.png" },
   { name: "Sehnsucht (1997)", img: "https://upload.wikimedia.org/wikipedia/en/f/f7/Rammstein_-_Sehnsucht.png" },
   { name: "Mutter (2001)", img: "https://upload.wikimedia.org/wikipedia/en/5/5b/Rammstein_-_Mutter.png" },
   { name: "Reise, Reise (2004)", img: "https://upload.wikimedia.org/wikipedia/en/2/2b/Rammstein_-_Reise_Reise.png" },
   { name: "Rosenrot (2005)", img: "https://upload.wikimedia.org/wikipedia/en/c/c9/Rammstein_Rosenrot.png" },
-  { name: "Liebe ist für alle da (2009)", img: "https://upload.wikimedia.org/wikipedia/en/0/0e/Rammstein_Liebe_ist_f%C3%BCr_alle_da.png" },
+  { name: "Liebe ist für alle da (2009)", img: "https://upload.wikimedia.org/wikipedia/en/0/0e/Rammstein_Liebe_ist_für_alle_da.png" },
   { name: "Rammstein (2019)", img: "https://upload.wikimedia.org/wikipedia/en/6/61/Rammstein_-_Rammstein_%28album%29.png" },
   { name: "Zeit (2022)", img: "https://upload.wikimedia.org/wikipedia/en/d/dc/Rammstein_-_Zeit.png" },
+  
+  // Timbres
+  { name: "Herzeleid Timbre: Gain5 Bass4 Middle4 Treble7", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Electric_guitar_icon.svg/240px-Electric_guitar_icon.svg.png" },
+  { name: "Sehnsucht Timbre: Gain6 Bass5 Middle4 Treble6", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Electric_guitar_icon.svg/240px-Electric_guitar_icon.svg.png" },
+  { name: "Mutter Timbre: Gain7 Bass5 Middle5 Treble5", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Electric_guitar_icon.svg/240px-Electric_guitar_icon.svg.png" },
+  { name: "Rosenrot Timbre: Gain6 Bass4 Middle6 Treble6", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Electric_guitar_icon.svg/240px-Electric_guitar_icon.svg.png" },
+
+  // Pedais
   { name: "Pedal Distortion Marshall", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Guitar_effects_icon.svg/240px-Guitar_effects_icon.svg.png" },
   { name: "Pedal Delay Boss", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Guitar_effects_icon.svg/240px-Guitar_effects_icon.svg.png" },
+  { name: "Pedal Chorus MXR", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Guitar_effects_icon.svg/240px-Guitar_effects_icon.svg.png" },
+
+  // Fotos da banda
   { name: "Foto Show 1", img: "https://upload.wikimedia.org/wikipedia/commons/8/85/Rammstein_live_2016.jpg" },
-  { name: "Foto Show 2", img: "https://upload.wikimedia.org/wikipedia/commons/0/0a/Rammstein_Wacken_2013.jpg" }
+  { name: "Foto Show 2", img: "https://upload.wikimedia.org/wikipedia/commons/0/0a/Rammstein_Wacken_2013.jpg" },
+  { name: "Foto Show 3", img: "https://upload.wikimedia.org/wikipedia/commons/5/52/Rammstein_2019.jpg" }
 ];
 
-// Links Instagram e Loja
-const rammsteinLinks = `
-<div class="rammstein-info">
-<h3>Redes Sociais e Loja Oficial</h3>
-<div class="social-links">
-<p><a href="https://www.instagram.com/rammsteinofficial/" target="_blank">Instagram Oficial da Banda</a></p>
-<p><a href="https://www.instagram.com/till_lindemann_official/" target="_blank">Till Lindemann</a></p>
-<p><a href="https://www.instagram.com/richard.kruspe/" target="_blank">Richard Z. Kruspe</a></p>
-<p><a href="https://www.instagram.com/paullanders_official/" target="_blank">Paul Landers</a></p>
-<p><a href="https://www.instagram.com/oliver_riedel_official/" target="_blank">Oliver Riedel</a></p>
-<p><a href="https://www.instagram.com/christophschneider_official/" target="_blank">Christoph Schneider</a></p>
-<p><a href="https://www.instagram.com/christianlorenz_official/" target="_blank">Christian "Flake" Lorenz</a></p>
-<p><a href="https://www.rammsteinshop.us/en" target="_blank">Loja Oficial Rammstein</a></p>
-</div>
-</div>
-`;
+// Função de filtragem
+function filterItems() {
+  const val = document.getElementById('search').value.toLowerCase();
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = items
+    .filter(i => i.name.toLowerCase().includes(val))
+    .map(i => `<div class="item" onclick="openModal('${i.img}','${i.name}')"><img src="${i.img}" alt="${i.name}"><p>${i.name}</p></div>`)
+    .join('');
+}
+
+// Inicializa a galeria
+filterItems();
 
 // Modal
-function openModal(src, alt){
+function openModal(src, alt) {
+  document.getElementById('modal-img').src = src;
+  document.getElementById('modal-img').alt = alt;
+  document.getElementById('modal').style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = "none";
+  document.getElementById('modal-img').src = "";
+}
+</script>
+
+</body>
+</html>
